@@ -26,11 +26,6 @@ public class DefaultProductGateway implements ProductGateway {
     }
 
     @Override
-    public List<Product> findByIds(List<Long> ids) {
-        return productDAO.findAllByIdInAndDeletedAtNull(ids).stream().map(ProductJPA::toEntity).toList();
-    }
-
-    @Override
     public List<Product> findAll() {
         return productDAO.findAllByDeletedAtNull().stream().map(ProductJPA::toEntity).toList();
     }
