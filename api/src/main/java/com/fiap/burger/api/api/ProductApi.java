@@ -25,9 +25,10 @@ public class ProductApi {
 
     @Operation(summary = "Listar produtos", description = "Listagem dos produtos cadastrados", tags = {"produto"})
     @GetMapping()
-    public List<ProductResponseDto> list(@RequestParam @Nullable Category category) {
+    public List<ProductResponseDto> list(@RequestParam @Nullable Category category,
+                                         @RequestParam @Nullable List<Long> id) {
         return controller
-            .list(category)
+            .list(category, id)
             .stream()
             .map(ProductResponseDto::toResponseDto)
             .toList();

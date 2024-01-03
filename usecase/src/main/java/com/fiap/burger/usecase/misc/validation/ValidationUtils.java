@@ -1,11 +1,8 @@
 package com.fiap.burger.usecase.misc.validation;
 
 import com.fiap.burger.usecase.misc.exception.BlankAttributeException;
-import com.fiap.burger.usecase.misc.exception.InvalidEmailFormatException;
 import com.fiap.burger.usecase.misc.exception.NegativeOrZeroValueException;
 import com.fiap.burger.usecase.misc.exception.NullAttributeException;
-
-import java.util.regex.Pattern;
 
 public class ValidationUtils {
     private ValidationUtils() {
@@ -24,10 +21,4 @@ public class ValidationUtils {
         if (value <= 0) throw new NegativeOrZeroValueException(attributeName);
     }
 
-    public static void validateEmailFormat(String email) {
-        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
-        if (!Pattern.matches(emailRegex, email)) {
-            throw new InvalidEmailFormatException();
-        }
-    }
 }

@@ -67,13 +67,13 @@ class DefaultProductUseCaseTest {
         List<Product> expected = Collections.singletonList(new ProductBuilder().build());
         Category category = Category.BEBIDA;
 
-        when(gateway.findAllBy(category)).thenReturn(expected);
+        when(gateway.findAllBy(category, null)).thenReturn(expected);
 
-        List<Product> actual = useCase.findAllBy(category);
+        List<Product> actual = useCase.findAllBy(category, null);
 
         assertEquals(expected, actual);
 
-        verify(gateway, times(1)).findAllBy(category);
+        verify(gateway, times(1)).findAllBy(category, null);
     }
 
     @Test

@@ -10,7 +10,7 @@ public interface ProductUseCase {
 
     List<Product> findAll();
 
-    List<Product> findAllBy(Category category);
+    List<Product> findAllBy(Category category, List<Long> id);
 
     Product insert(Product product);
 
