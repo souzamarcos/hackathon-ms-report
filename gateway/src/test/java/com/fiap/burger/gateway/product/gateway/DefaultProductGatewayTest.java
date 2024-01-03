@@ -5,15 +5,15 @@ import com.fiap.burger.gateway.misc.ProductBuilder;
 import com.fiap.burger.gateway.misc.ProductJPABuilder;
 import com.fiap.burger.gateway.product.dao.ProductDAO;
 import com.fiap.burger.gateway.product.model.ProductJPA;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
@@ -24,6 +24,9 @@ class DefaultProductGatewayTest {
 
     @Mock
     ProductDAO productDAO;
+
+    @Mock
+    EntityManager entityManager;
 
     @InjectMocks
     DefaultProductGateway gateway;
@@ -69,13 +72,16 @@ class DefaultProductGatewayTest {
         var productsJPA = Collections.singletonList(new ProductJPABuilder().withId(2L).build());
         var expected = productsJPA.stream().map(ProductJPA::toEntity).toList();
 
-        when(productDAO.findAllByCategoryAndDeletedAtNull(category)).thenReturn(productsJPA);
+        TypedQuery<ProductJPA> query = (TypedQuery<ProductJPA>) mock(TypedQuery.class);
+        when(entityManager.createQuery(anyString(), eq(ProductJPA.class))).thenReturn(query);
+        when(query.getResultList()).thenReturn(productsJPA);
 
-        var actual = gateway.findAllBy(category);
+        var actual = gateway.findAllBy(category, null);
 
         assertIterableEquals(expected, actual);
 
-        verify(productDAO, times(1)).findAllByCategoryAndDeletedAtNull(category);
+        verify(entityManager, times(1)).createQuery(anyString(), eq(ProductJPA.class));
+        verify(query, times(1)).getResultList();
     }
 
     @Test

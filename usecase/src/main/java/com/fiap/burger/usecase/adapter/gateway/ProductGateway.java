@@ -8,11 +8,9 @@ import java.util.List;
 public interface ProductGateway {
     Product findById(Long id);
 
-    List<Product> findByIds(List<Long> ids);
-
     List<Product> findAll();
 
-    List<Product> findAllBy(Category category);
+    List<Product> findAllBy(Category category, List<Long> ids);
 
     Product save(Product product);
 

@@ -28,8 +28,8 @@ public class DefaultProductUseCase implements ProductUseCase {
         return productGateway.findAll();
     }
 
-    public List<Product> findAllBy(Category category) {
-        return productGateway.findAllBy(category);
+    public List<Product> findAllBy(Category category, List<Long> id) {
+        return productGateway.findAllBy(category, id);
     }
 
     public Product insert(Product product) {

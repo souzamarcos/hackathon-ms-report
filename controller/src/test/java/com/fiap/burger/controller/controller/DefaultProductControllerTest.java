@@ -33,28 +33,27 @@ class DefaultProductControllerTest {
     void shouldListAll() {
         List<Product> expected = List.of(new Product(1L, Category.LANCHE, "Nome", "Descrição", 10.0));
 
-        when(useCase.findAll()).thenReturn(expected);
+        when(useCase.findAllBy(any(), any())).thenReturn(expected);
 
-        List<Product> actual = controller.list(null);
+        List<Product> actual = controller.list(null, null);
 
         assertEquals(expected, actual);
 
-        verify(useCase, times(1)).findAll();
-        verify(useCase, times(0)).findAllBy(any());
+        verify(useCase, times(1)).findAllBy(any(), any());
     }
 
     @Test
     void shouldListAllByCategory() {
         List<Product> expected = List.of(new Product(1L, Category.LANCHE, "Nome", "Descrição", 10.0));
 
-        when(useCase.findAllBy(Category.LANCHE)).thenReturn(expected);
+        when(useCase.findAllBy(Category.LANCHE, null)).thenReturn(expected);
 
-        List<Product> actual = controller.list(Category.LANCHE);
+        List<Product> actual = controller.list(Category.LANCHE, null);
 
         assertEquals(expected, actual);
 
         verify(useCase, times(0)).findAll();
-        verify(useCase, times(1)).findAllBy(Category.LANCHE);
+        verify(useCase, times(1)).findAllBy(Category.LANCHE, null);
     }
 
     @Test

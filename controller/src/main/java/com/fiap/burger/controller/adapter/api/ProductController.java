@@ -6,7 +6,7 @@ import com.fiap.burger.entity.product.Product;
 import java.util.List;
 
 public interface ProductController {
-    List<Product> list(Category category);
+    List<Product> list(Category category, List<Long> id);
 
     Product findById(Long productId);
 

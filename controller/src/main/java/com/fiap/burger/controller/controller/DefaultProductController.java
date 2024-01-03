@@ -19,12 +19,8 @@ public class DefaultProductController implements ProductController {
     private ProductGateway gateway;
 
     @Override
-    public List<Product> list(Category category) {
-        if (category == null) {
-            return useCase.findAll();
-        } else {
-            return useCase.findAllBy(category);
-        }
+    public List<Product> list(Category category, List<Long> id) {
+        return useCase.findAllBy(category, id);
     }
 
     @Override

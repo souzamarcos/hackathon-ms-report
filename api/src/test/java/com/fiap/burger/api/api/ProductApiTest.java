@@ -32,13 +32,13 @@ class ProductApiTest {
         var products = List.of(new Product(1L, Category.LANCHE, "Nome", "Descrição", 10.0));
         var expected = List.of(new ProductResponseDto(1L, Category.LANCHE, "Nome", "Descrição", 10.0));
 
-        when(controller.list(Category.LANCHE)).thenReturn(products);
+        when(controller.list(Category.LANCHE, null)).thenReturn(products);
 
-        List<ProductResponseDto> actual = api.list(Category.LANCHE);
+        List<ProductResponseDto> actual = api.list(Category.LANCHE, null);
 
         assertEquals(expected, actual);
 
-        verify(controller, times(1)).list(Category.LANCHE);
+        verify(controller, times(1)).list(Category.LANCHE, null);
     }
 
     @Test
