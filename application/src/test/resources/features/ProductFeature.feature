@@ -24,3 +24,8 @@ Funcionalidade: API - Produtos
     Dado que um produto já foi cadastrado
     Quando requisitar a listagem de produtos por categoria
     Entao as mensagens são exibidas com sucesso
+
+  Cenario: Listar produtos por ids
+    Dado que dois produtos já foram cadastrados
+    Quando requisitar a listagem de produtos por ids
+    Entao as mensagens são exibidas com sucesso

@@ -9,6 +9,10 @@ import io.restassured.response.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.Matchers.equalTo;
@@ -18,6 +22,8 @@ public class StepDefinition {
     private Response response;
 
     private ProductResponseDto productResponse;
+
+    private List<ProductResponseDto> productResponseList;
 
     private String ENDPOINT_PRODUCTS = "http://localhost:8080/products";
 
@@ -102,5 +108,20 @@ public class StepDefinition {
         response.then()
             .statusCode(HttpStatus.OK.value())
             .body(matchesJsonSchemaInClasspath("./schemas/ListProductResponseSchema.json"));
+    }
+
+    @Dado("que dois produtos já foram cadastrados")
+    public void doisProdutosJaForamCadastrados() {
+        productResponseList = new ArrayList<>();
+        productResponseList.add(submeterUmNovoProduto());
+        productResponseList.add(submeterUmNovoProduto());
+    }
+
+    @Quando("requisitar a listagem de produtos por ids")
+    public void requisitarListagemDeProdutosPorIds() {
+        response = given()
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .when()
+            .get(ENDPOINT_PRODUCTS + "?ids=" + productResponseList.stream().map(p -> p.id().toString()).collect(Collectors.joining(",")));
     }
 }
