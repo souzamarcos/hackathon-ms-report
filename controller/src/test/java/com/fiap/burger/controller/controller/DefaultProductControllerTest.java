@@ -5,6 +5,7 @@ import com.fiap.burger.entity.product.Product;
 import com.fiap.burger.usecase.misc.exception.ProductNotFoundException;
 import com.fiap.burger.usecase.usecase.DefaultProductUseCase;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -29,56 +30,78 @@ class DefaultProductControllerTest {
         MockitoAnnotations.openMocks(this);
     }
 
-    @Test
-    void shouldListAll() {
-        List<Product> expected = List.of(new Product(1L, Category.LANCHE, "Nome", "Descrição", 10.0));
+    @Nested
+    class findById {
+        @Test
+        void shouldFindById() {
+            var id = 1L;
+            var expected = new Product(1L, Category.LANCHE, "Nome", "Descrição", 10.0);
 
-        when(useCase.findAllBy(any(), any())).thenReturn(expected);
+            when(useCase.findById(id)).thenReturn(expected);
 
-        List<Product> actual = controller.list(null, null);
+            Product actual = controller.findById(id);
 
-        assertEquals(expected, actual);
+            assertEquals(expected, actual);
 
-        verify(useCase, times(1)).findAllBy(any(), any());
+            verify(useCase, times(1)).findById(id);
+        }
+
+        @Test
+        void shouldThrownProductNotFoundExceptionWhenProductNotFoundById() {
+            var id = 1L;
+
+            when(useCase.findById(id)).thenReturn(null);
+
+            assertThrows(ProductNotFoundException.class, () -> controller.findById(id));
+
+            verify(useCase, times(1)).findById(id);
+        }
     }
 
-    @Test
-    void shouldListAllByCategory() {
-        List<Product> expected = List.of(new Product(1L, Category.LANCHE, "Nome", "Descrição", 10.0));
+    @Nested
+    class findAll {
+        @Test
+        void shouldFindAll() {
+            List<Product> expected = List.of(new Product(1L, Category.LANCHE, "Nome", "Descrição", 10.0));
 
-        when(useCase.findAllBy(Category.LANCHE, null)).thenReturn(expected);
+            when(useCase.findAllBy(any(), any())).thenReturn(expected);
 
-        List<Product> actual = controller.list(Category.LANCHE, null);
+            List<Product> actual = controller.list(null, null);
 
-        assertEquals(expected, actual);
+            assertEquals(expected, actual);
 
-        verify(useCase, times(0)).findAll();
-        verify(useCase, times(1)).findAllBy(Category.LANCHE, null);
-    }
+            verify(useCase, times(1)).findAllBy(any(), any());
+        }
 
-    @Test
-    void shouldFindById() {
-        var id = 1L;
-        var expected = new Product(1L, Category.LANCHE, "Nome", "Descrição", 10.0);
+        @Test
+        void shouldFindAllByCategory() {
+            List<Product> expected = List.of(new Product(1L, Category.LANCHE, "Nome", "Descrição", 10.0));
 
-        when(useCase.findById(id)).thenReturn(expected);
+            when(useCase.findAllBy(Category.LANCHE, null)).thenReturn(expected);
 
-        Product actual = controller.findById(id);
+            List<Product> actual = controller.list(Category.LANCHE, null);
 
-        assertEquals(expected, actual);
+            assertEquals(expected, actual);
 
-        verify(useCase, times(1)).findById(id);
-    }
+            verify(useCase, times(0)).findAll();
+            verify(useCase, times(1)).findAllBy(Category.LANCHE, null);
+        }
 
-    @Test
-    void shouldThrownProductNotFoundExceptionWhenProductNotFoundById() {
-        var id = 1L;
+        @Test
+        void shouldFindAllByIds() {
+            List<Product> expected = List.of(
+                new Product(1L, Category.LANCHE, "Nome", "Descrição", 10.0),
+                new Product(2L, Category.LANCHE, "Nome", "Descrição", 10.0));
 
-        when(useCase.findById(id)).thenReturn(null);
+            when(useCase.findAllBy(null, List.of(1L, 2L))).thenReturn(expected);
 
-        assertThrows(ProductNotFoundException.class, () -> controller.findById(id));
+            List<Product> actual = controller.list(null, List.of(1L, 2L));
 
-        verify(useCase, times(1)).findById(id);
+            assertEquals(expected, actual);
+
+            verify(useCase, times(0)).findAll();
+            verify(useCase, times(1)).findAllBy(null, List.of(1L, 2L));
+        }
     }
 
     @Test

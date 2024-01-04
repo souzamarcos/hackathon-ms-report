@@ -28,7 +28,7 @@ class ProductApiTest {
     ProductController controller;
 
     @Test
-    void shouldList() {
+    void shouldListByCategory() {
         var products = List.of(new Product(1L, Category.LANCHE, "Nome", "Descrição", 10.0));
         var expected = List.of(new ProductResponseDto(1L, Category.LANCHE, "Nome", "Descrição", 10.0));
 
@@ -39,6 +39,25 @@ class ProductApiTest {
         assertEquals(expected, actual);
 
         verify(controller, times(1)).list(Category.LANCHE, null);
+    }
+
+    @Test
+    void shouldListByIds() {
+        var products = List.of(
+            new Product(1L, Category.LANCHE, "Nome", "Descrição", 10.0),
+            new Product(2L, Category.LANCHE, "Nome", "Descrição", 10.0));
+
+        var expected = List.of(
+            new ProductResponseDto(1L, Category.LANCHE, "Nome", "Descrição", 10.0),
+            new ProductResponseDto(2L, Category.LANCHE, "Nome", "Descrição", 10.0));
+
+        when(controller.list(null, List.of(1L, 2L))).thenReturn(products);
+
+        List<ProductResponseDto> actual = api.list(null, List.of(1L, 2L));
+
+        assertEquals(expected, actual);
+
+        verify(controller, times(1)).list(null, List.of(1L, 2L));
     }
 
     @Test

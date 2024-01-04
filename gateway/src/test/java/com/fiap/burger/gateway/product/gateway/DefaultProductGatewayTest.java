@@ -8,6 +8,7 @@ import com.fiap.burger.gateway.product.model.ProductJPA;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -36,7 +37,6 @@ class DefaultProductGatewayTest {
         MockitoAnnotations.openMocks(this);
     }
 
-
     @Test
     void shouldFindById() {
         var id = 1L;
@@ -52,36 +52,58 @@ class DefaultProductGatewayTest {
         verify(productDAO, times(1)).findById(id);
     }
 
-    @Test
-    void shouldFindAllProducts() {
-        var productsJPA = Arrays.asList(new ProductJPABuilder().withId(1L).build(), new ProductJPABuilder().withId(2L).build());
-        var expected = productsJPA.stream().map(ProductJPA::toEntity).toList();
+    @Nested
+    class findAll {
+        @Test
+        void shouldFindAllProducts() {
+            var productsJPA = Arrays.asList(new ProductJPABuilder().withId(1L).build(), new ProductJPABuilder().withId(2L).build());
+            var expected = productsJPA.stream().map(ProductJPA::toEntity).toList();
 
-        when(productDAO.findAllByDeletedAtNull()).thenReturn(productsJPA);
+            when(productDAO.findAllByDeletedAtNull()).thenReturn(productsJPA);
 
-        var actual = gateway.findAll();
+            var actual = gateway.findAll();
 
-        assertIterableEquals(expected, actual);
+            assertIterableEquals(expected, actual);
 
-        verify(productDAO, times(1)).findAllByDeletedAtNull();
-    }
+            verify(productDAO, times(1)).findAllByDeletedAtNull();
+        }
 
-    @Test
-    void shouldFindAllProductsByCategory() {
-        var category = Category.LANCHE;
-        var productsJPA = Collections.singletonList(new ProductJPABuilder().withId(2L).build());
-        var expected = productsJPA.stream().map(ProductJPA::toEntity).toList();
+        @Test
+        void shouldFindAllProductsByCategory() {
+            var category = Category.LANCHE;
+            var productsJPA = Collections.singletonList(new ProductJPABuilder().withId(2L).build());
+            var expected = productsJPA.stream().map(ProductJPA::toEntity).toList();
 
-        TypedQuery<ProductJPA> query = (TypedQuery<ProductJPA>) mock(TypedQuery.class);
-        when(entityManager.createQuery(anyString(), eq(ProductJPA.class))).thenReturn(query);
-        when(query.getResultList()).thenReturn(productsJPA);
+            TypedQuery<ProductJPA> query = (TypedQuery<ProductJPA>) mock(TypedQuery.class);
+            when(entityManager.createQuery(anyString(), eq(ProductJPA.class))).thenReturn(query);
+            when(query.getResultList()).thenReturn(productsJPA);
 
-        var actual = gateway.findAllBy(category, null);
+            var actual = gateway.findAllBy(category, null);
 
-        assertIterableEquals(expected, actual);
+            assertIterableEquals(expected, actual);
 
-        verify(entityManager, times(1)).createQuery(anyString(), eq(ProductJPA.class));
-        verify(query, times(1)).getResultList();
+            verify(entityManager, times(1)).createQuery(anyString(), eq(ProductJPA.class));
+            verify(query, times(1)).getResultList();
+        }
+
+        @Test
+        void shouldFindAllProductsByIds() {
+            List<ProductJPA> productsJPA = new ArrayList<>();
+            productsJPA.add(new ProductJPABuilder().withId(1L).build());
+            productsJPA.add(new ProductJPABuilder().withId(2L).build());
+            var expected = productsJPA.stream().map(ProductJPA::toEntity).toList();
+
+            TypedQuery<ProductJPA> query = (TypedQuery<ProductJPA>) mock(TypedQuery.class);
+            when(entityManager.createQuery(anyString(), eq(ProductJPA.class))).thenReturn(query);
+            when(query.getResultList()).thenReturn(productsJPA);
+
+            var actual = gateway.findAllBy(null, List.of(1L, 2L));
+
+            assertIterableEquals(expected, actual);
+
+            verify(entityManager, times(1)).createQuery(anyString(), eq(ProductJPA.class));
+            verify(query, times(1)).getResultList();
+        }
     }
 
     @Test
