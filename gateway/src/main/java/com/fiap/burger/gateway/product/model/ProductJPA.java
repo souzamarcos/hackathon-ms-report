@@ -20,7 +20,7 @@ public class ProductJPA extends BaseDomainJPA {
     @Column(nullable = false)
     String description;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name="`value`")
     Double value;
 
     public ProductJPA() {

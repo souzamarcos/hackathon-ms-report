@@ -28,6 +28,13 @@ subprojects {
 
 		//Test
 		testImplementation(rootProject.libs.spring.boot.starter.test)
+		testImplementation("io.cucumber:cucumber-java:7.15.0")
+		testImplementation("io.cucumber:cucumber-junit:7.15.0")
+		testImplementation("io.cucumber:cucumber-junit-platform-engine:7.15.0")
+		testImplementation("org.junit.platform:junit-platform-suite:1.9.3")
+		testImplementation("io.rest-assured:rest-assured:5.3.0")
+		testImplementation("io.rest-assured:json-schema-validator:5.3.1")
+		testImplementation("com.h2database:h2:2.2.224")
 	}
 
 	tasks.withType<Test> {
