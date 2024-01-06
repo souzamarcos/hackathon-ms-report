@@ -11,5 +11,4 @@ dependencies {
     implementation(rootProject.libs.aws.dynamodb.enhanced)
 
     runtimeOnly(rootProject.libs.mysql.connector)
-    runtimeOnly(rootProject.libs.h2)
 }

@@ -15,7 +15,7 @@ import org.springframework.test.context.TestPropertySource;
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
         classes = CucumberTestConfig.class
 )
-@TestPropertySource("classpath:application.properties")
+@TestPropertySource("classpath:application-cucumber.properties")
 @ActiveProfiles("test")
 public class CucumberIntegrationTest {
 
