@@ -1,4 +1,4 @@
-INSERT INTO product(id, category, name, description, `value`, created_at, modified_at) VALUES
+INSERT INTO product(id, category, name, description, price, created_at, modified_at) VALUES
 (1, 'LANCHE', 'Salada Burguer', 'Hamburguer delicioso com 150g de carne artesanal, cebola rocha, alface, tomate, cheddar', 26.8, '2023-07-02 23:05:23', '2023-07-02 23:05:23'),
 (2, 'LANCHE', 'Bacon Salada Burguer', 'Hamburguer delicioso com 150g de carne artesanal, cebola rocha, alface, tomate, cheddar, bacon', 27.0, '2023-07-02 23:05:23', '2023-07-02 23:05:23'),
 (3, 'LANCHE', 'Egg Salada Burguer', 'Hamburguer delicioso com 150g de carne artesanal, cebola rocha, alface, tomate, cheddar, ovo', 28.1, '2023-07-02 23:05:23', '2023-07-02 23:05:23'),

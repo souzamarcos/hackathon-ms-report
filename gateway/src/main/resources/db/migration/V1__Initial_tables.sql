@@ -3,7 +3,7 @@ CREATE TABLE product(
     `category` VARCHAR(100) NOT NULL,
     `name` VARCHAR(255) NOT NULL,
     `description` VARCHAR(255) NOT NULL,
-    `value` DOUBLE NOT NULL,
+    `price` DOUBLE NOT NULL,
     `created_at` DATETIME NOT NULL,
     `modified_at` DATETIME NOT NULL,
     `deleted_at` DATETIME DEFAULT NULL,
