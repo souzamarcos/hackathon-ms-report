@@ -10,8 +10,8 @@ import org.springframework.test.context.TestPropertySource;
 
 @CucumberContextConfiguration
 @SpringBootTest(
-        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
-        classes = CucumberTestConfig.class
+    webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
+    classes = CucumberTestConfig.class
 )
 @TestPropertySource("classpath:application-cucumber.properties")
 @ActiveProfiles("test")

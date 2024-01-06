@@ -6,5 +6,4 @@ import org.springframework.test.context.ContextConfiguration;
 
 @ContextConfiguration
 @ComponentScan(basePackages = "com.fiap.burger")
-public class CucumberTestConfig {
-}
+public class CucumberTestConfig { }
