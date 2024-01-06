@@ -20,8 +20,8 @@ public class ProductJPA extends BaseDomainJPA {
     @Column(nullable = false)
     String description;
 
-    @Column(nullable = false, name="`value`")
-    Double value;
+    @Column(nullable = false)
+    Double price;
 
     public ProductJPA() {
     }
@@ -31,7 +31,7 @@ public class ProductJPA extends BaseDomainJPA {
         Category category,
         String name,
         String description,
-        Double value,
+        Double price,
         LocalDateTime createdAt,
         LocalDateTime modifiedAt,
         LocalDateTime deletedAt
@@ -40,7 +40,7 @@ public class ProductJPA extends BaseDomainJPA {
         this.category = category;
         this.name = name;
         this.description = description;
-        this.value = value;
+        this.price = price;
         this.createdAt = createdAt;
         this.modifiedAt = modifiedAt;
         this.deletedAt = deletedAt;
@@ -58,8 +58,8 @@ public class ProductJPA extends BaseDomainJPA {
         return description;
     }
 
-    public Double getValue() {
-        return value;
+    public Double getPrice() {
+        return price;
     }
 
     @Override
@@ -76,7 +76,7 @@ public class ProductJPA extends BaseDomainJPA {
             getCategory(),
             getName(),
             getDescription(),
-            getValue(),
+            getPrice(),
             getCreatedAt(),
             getModifiedAt(),
             getDeletedAt()
@@ -97,6 +97,6 @@ public class ProductJPA extends BaseDomainJPA {
     }
 
     public Product toEntity() {
-        return new Product(id, category, name, description, value, createdAt, modifiedAt, deletedAt);
+        return new Product(id, category, name, description, price, createdAt, modifiedAt, deletedAt);
     }
 }

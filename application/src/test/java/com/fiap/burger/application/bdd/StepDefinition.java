@@ -17,7 +17,8 @@ import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.Matchers.equalTo;
 
-public class StepDefinition {
+
+public class StepDefinition extends CucumberIntegrationTest {
 
     private Response response;
 
@@ -25,7 +26,7 @@ public class StepDefinition {
 
     private List<ProductResponseDto> productResponseList;
 
-    private String ENDPOINT_PRODUCTS = "http://localhost:8080/products";
+    private String getEndpoint() { return "http://localhost:" + port + "/products"; }
 
     @Quando("submeter um novo produto")
     public ProductResponseDto submeterUmNovoProduto() {
@@ -33,7 +34,7 @@ public class StepDefinition {
         response = given()
             .contentType(MediaType.APPLICATION_JSON_VALUE)
             .body(productRequest)
-            .when().post(ENDPOINT_PRODUCTS);
+            .when().post(getEndpoint());
         return response.then().extract().as(ProductResponseDto.class);
     }
     @Entao("a mensagem é registrada com sucesso")
@@ -53,7 +54,7 @@ public class StepDefinition {
         response = given()
             .contentType(MediaType.APPLICATION_JSON_VALUE)
             .when()
-            .get(ENDPOINT_PRODUCTS + "/{id}", productResponse.id().toString());
+            .get(getEndpoint() + "/{id}", productResponse.id().toString());
     }
 
     @Entao("a mensagem é exibida com sucesso")
@@ -70,7 +71,7 @@ public class StepDefinition {
             .contentType(MediaType.APPLICATION_JSON_VALUE)
             .body(ProductHelper.updateProductRequest(productResponse))
             .when()
-            .put(ENDPOINT_PRODUCTS);
+            .put(getEndpoint());
     }
 
     @Entao("a mensagem é atualizada com sucesso")
@@ -85,7 +86,7 @@ public class StepDefinition {
         response = given()
             .contentType(MediaType.APPLICATION_JSON_VALUE)
             .when()
-            .delete(ENDPOINT_PRODUCTS + "/{id}", productResponse.id().toString());
+            .delete(getEndpoint() + "/{id}", productResponse.id().toString());
     }
 
     @Entao("a mensagem é excluída com sucesso")
@@ -100,7 +101,7 @@ public class StepDefinition {
         response = given()
             .contentType(MediaType.APPLICATION_JSON_VALUE)
             .when()
-            .get(ENDPOINT_PRODUCTS + "?category=LANCHE");
+            .get(getEndpoint() + "?category=LANCHE");
     }
 
     @Entao("as mensagens são exibidas com sucesso")
@@ -122,6 +123,6 @@ public class StepDefinition {
         response = given()
             .contentType(MediaType.APPLICATION_JSON_VALUE)
             .when()
-            .get(ENDPOINT_PRODUCTS + "?ids=" + productResponseList.stream().map(p -> p.id().toString()).collect(Collectors.joining(",")));
+            .get(getEndpoint() + "?ids=" + productResponseList.stream().map(p -> p.id().toString()).collect(Collectors.joining(",")));
     }
 }
