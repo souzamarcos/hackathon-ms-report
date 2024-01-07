@@ -25,7 +25,7 @@ class ProductTest {
         assertEquals(category, actual.getCategory());
         assertEquals(name, actual.getName());
         assertEquals(description, actual.getDescription());
-        assertEquals(value, actual.getValue());
+        assertEquals(value, actual.getPrice());
     }
 
     @Test
@@ -48,7 +48,7 @@ class ProductTest {
         assertEquals(category, actual.getCategory());
         assertEquals(name, actual.getName());
         assertEquals(description, actual.getDescription());
-        assertEquals(value, actual.getValue());
+        assertEquals(value, actual.getPrice());
     }
 
     @Test
@@ -76,8 +76,8 @@ class ProductTest {
         assertEquals(category, actual.getCategory());
         assertEquals(name, actual.getName());
         assertEquals(description, actual.getDescription());
-        assertEquals(value, actual.getValue());
-        assertEquals(value, actual.getValue());
+        assertEquals(value, actual.getPrice());
+        assertEquals(value, actual.getPrice());
         assertEquals(createdAt, actual.getCreatedAt());
         assertEquals(modifiedAt, actual.getModifiedAt());
         assertEquals(null, actual.getDeletedAt());

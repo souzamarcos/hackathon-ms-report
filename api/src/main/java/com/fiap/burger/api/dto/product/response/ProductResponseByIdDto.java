@@ -30,7 +30,7 @@ public record ProductResponseByIdDto(
             product.getCategory(),
             product.getName(),
             product.getDescription(),
-            product.getValue(),
+            product.getPrice(),
             product.getCreatedAt(),
             product.getModifiedAt(),
             product.getDeletedAt()
