@@ -16,7 +16,7 @@ public record ProductResponseByIdDto(
     @NotBlank String description,
     @NotBlank
     @DecimalMin("0.01")
-    Double value,
+    Double price,
     @NotNull
     LocalDateTime createdAt,
     @NotNull
