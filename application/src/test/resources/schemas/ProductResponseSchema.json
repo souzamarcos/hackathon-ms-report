@@ -14,7 +14,7 @@
     "description": {
       "type": "string"
     },
-    "value": {
+    "price": {
       "type": "number"
     }
   },
@@ -23,6 +23,6 @@
     "category",
     "name",
     "description",
-    "value"
+    "price"
   ]
 }

@@ -12,7 +12,7 @@ public record ProductResponseDto(
     @NotBlank String description,
     @NotBlank
     @DecimalMin("0.01")
-    Double value
+    Double price
 ) {
     public static ProductResponseDto toResponseDto(Product product) {
         return new ProductResponseDto(
@@ -20,7 +20,7 @@ public record ProductResponseDto(
             product.getCategory(),
             product.getName(),
             product.getDescription(),
-            product.getValue()
+            product.getPrice()
         );
     }
 }

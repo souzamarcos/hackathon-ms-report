@@ -89,7 +89,7 @@ public class ProductJPA extends BaseDomainJPA {
             product.getCategory(),
             product.getName(),
             product.getDescription(),
-            product.getValue(),
+            product.getPrice(),
             product.getCreatedAt(),
             product.getModifiedAt(),
             product.getDeletedAt()

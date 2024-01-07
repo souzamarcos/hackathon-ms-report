@@ -16,7 +16,7 @@ public record ProductResponseByIdDto(
     @NotBlank String description,
     @NotBlank
     @DecimalMin("0.01")
-    Double value,
+    Double price,
     @NotNull
     LocalDateTime createdAt,
     @NotNull
@@ -30,7 +30,7 @@ public record ProductResponseByIdDto(
             product.getCategory(),
             product.getName(),
             product.getDescription(),
-            product.getValue(),
+            product.getPrice(),
             product.getCreatedAt(),
             product.getModifiedAt(),
             product.getDeletedAt()

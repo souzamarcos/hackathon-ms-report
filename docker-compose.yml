@@ -4,7 +4,7 @@ services:
     image: mysql:8.0
     restart: always
     environment:
-      MYSQL_DATABASE: 'burger'
+      MYSQL_DATABASE: 'product'
       MYSQL_USER: 'user'
       MYSQL_PASSWORD: 'password'
       MYSQL_ROOT_PASSWORD: 'password'
@@ -40,7 +40,7 @@ services:
       mysql:
         condition: service_healthy
     environment:
-      SPRING_DATASOURCE_URL: 'jdbc:mysql://mysql:3306/burger'
+      SPRING_DATASOURCE_URL: 'jdbc:mysql://mysql:3306/product'
       SPRING_DATASOURCE_USERNAME: 'user'
       SPRING_DATASOURCE_PASSWORD: 'password'
     ports:

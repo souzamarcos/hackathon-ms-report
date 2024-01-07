@@ -12,7 +12,7 @@ public class ProductHelper {
     }
 
     public static ProductUpdateRequestDto updateProductRequest(ProductResponseDto productResponse) {
-        return new ProductUpdateRequestDto(productResponse.id(), productResponse.category(), productResponse.name(), productResponse.description(), productResponse.value());
+        return new ProductUpdateRequestDto(productResponse.id(), productResponse.category(), productResponse.name(), productResponse.description(), productResponse.price());
     }
 
 }
