@@ -100,4 +100,4 @@ jobs:
 
       - name: Deploy to EKS
         run: |
-          kubectl rollout restart deploy app-burger-deployment
+          kubectl rollout restart deploy ms-product-deployment
