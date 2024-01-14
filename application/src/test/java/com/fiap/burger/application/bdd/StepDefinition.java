@@ -59,7 +59,6 @@ public class StepDefinition extends CucumberIntegrationTest {
 
     @Entao("a mensagem é exibida com sucesso")
     public void mensagemExibidaComSucesso() {
-        // Write code here that turns the phrase above into concrete actions
         response.then()
             .statusCode(HttpStatus.OK.value())
             .body(matchesJsonSchemaInClasspath("./schemas/ProductResponseSchema.json"));
