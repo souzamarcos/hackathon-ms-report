@@ -11,7 +11,7 @@ public class ProductBuilder {
     private Category category = Category.LANCHE;
     private String name = "Lanche de teste";
     private String description = "Lanche bom";
-    private Double value = 20.22;
+    private Double price = 20.22;
 
     private LocalDateTime createdAt = LocalDateTime.now();
     private LocalDateTime modifiedAt = LocalDateTime.now();
@@ -37,8 +37,8 @@ public class ProductBuilder {
         return this;
     }
 
-    public ProductBuilder withValue(Double value) {
-        this.value = value;
+    public ProductBuilder withPrice(Double price) {
+        this.price = price;
         return this;
     }
 
@@ -58,7 +58,7 @@ public class ProductBuilder {
     }
 
     public Product build() {
-        return new Product(id, category, name, description, value, createdAt, modifiedAt, deletedAt);
+        return new Product(id, category, name, description, price, createdAt, modifiedAt, deletedAt);
     }
 }
 

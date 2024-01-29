@@ -11,7 +11,7 @@ public class ProductJPABuilder {
     private Category category = Category.LANCHE;
     private String name = "Lanche de teste";
     private String description = "Lanche bom";
-    private Double value = 20.22;
+    private Double price = 20.22;
 
     private LocalDateTime createdAt = LocalDateTime.now();
     private LocalDateTime modifiedAt = LocalDateTime.now();
@@ -37,8 +37,8 @@ public class ProductJPABuilder {
         return this;
     }
 
-    public ProductJPABuilder withValue(Double value) {
-        this.value = value;
+    public ProductJPABuilder withPrice(Double price) {
+        this.price = price;
         return this;
     }
 
@@ -58,6 +58,6 @@ public class ProductJPABuilder {
     }
 
     public ProductJPA build() {
-        return new ProductJPA(id, category, name, description, value, createdAt, modifiedAt, deletedAt);
+        return new ProductJPA(id, category, name, description, price, createdAt, modifiedAt, deletedAt);
     }
 }

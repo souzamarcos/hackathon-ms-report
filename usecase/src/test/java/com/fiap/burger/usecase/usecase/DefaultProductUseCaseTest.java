@@ -167,8 +167,8 @@ class DefaultProductUseCaseTest {
         }
 
         @Test
-        void shouldThrowNullAttributeExceptionWhenProductValueIsNullToInsert() {
-            Product product = new ProductBuilder().withId(null).withValue(null).build();
+        void shouldThrowNullAttributeExceptionWhenProductPriceIsNullToInsert() {
+            Product product = new ProductBuilder().withId(null).withPrice(null).build();
 
             assertThrows(NullAttributeException.class, () -> useCase.insert(product));
 
@@ -176,8 +176,8 @@ class DefaultProductUseCaseTest {
         }
 
         @Test
-        void shouldThrowBlankAttributeExceptionWhenProductValueIsLessThanZeroToInsert() {
-            Product product = new ProductBuilder().withId(null).withValue(-0.1).build();
+        void shouldThrowBlankAttributeExceptionWhenProductPriceIsLessThanZeroToInsert() {
+            Product product = new ProductBuilder().withId(null).withPrice(-0.1).build();
 
             assertThrows(NegativeOrZeroValueException.class, () -> useCase.insert(product));
 
@@ -185,8 +185,8 @@ class DefaultProductUseCaseTest {
         }
 
         @Test
-        void shouldThrowBlankAttributeExceptionWhenProductValueIsZeroToInsert() {
-            Product product = new ProductBuilder().withId(null).withValue(0.0).build();
+        void shouldThrowBlankAttributeExceptionWhenProductPriceIsZeroToInsert() {
+            Product product = new ProductBuilder().withId(null).withPrice(0.0).build();
 
             assertThrows(NegativeOrZeroValueException.class, () -> useCase.insert(product));
 
