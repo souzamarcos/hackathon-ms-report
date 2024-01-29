@@ -13,19 +13,19 @@ class ProductTest {
         var category = Category.LANCHE;
         var name = "Product Test";
         var description = "Product description";
-        var value = 22.2;
+        var price = 22.2;
 
         Product actual = new Product(
             category,
             name,
             description,
-            value
+            price
         );
 
         assertEquals(category, actual.getCategory());
         assertEquals(name, actual.getName());
         assertEquals(description, actual.getDescription());
-        assertEquals(value, actual.getPrice());
+        assertEquals(price, actual.getPrice());
     }
 
     @Test
@@ -34,21 +34,21 @@ class ProductTest {
         var category = Category.LANCHE;
         var name = "Product Test";
         var description = "Product description";
-        var value = 22.2;
+        var price = 22.2;
 
         Product actual = new Product(
             id,
             category,
             name,
             description,
-            value
+            price
         );
 
         assertEquals(id, actual.getId());
         assertEquals(category, actual.getCategory());
         assertEquals(name, actual.getName());
         assertEquals(description, actual.getDescription());
-        assertEquals(value, actual.getPrice());
+        assertEquals(price, actual.getPrice());
     }
 
     @Test
@@ -57,7 +57,7 @@ class ProductTest {
         var category = Category.LANCHE;
         var name = "Product Test";
         var description = "Product description";
-        var value = 22.2;
+        var price = 22.2;
         var createdAt = LocalDateTime.now();
         var modifiedAt = LocalDateTime.now();
 
@@ -66,7 +66,7 @@ class ProductTest {
             category,
             name,
             description,
-            value,
+            price,
             createdAt,
             modifiedAt,
             null
@@ -76,8 +76,8 @@ class ProductTest {
         assertEquals(category, actual.getCategory());
         assertEquals(name, actual.getName());
         assertEquals(description, actual.getDescription());
-        assertEquals(value, actual.getPrice());
-        assertEquals(value, actual.getPrice());
+        assertEquals(price, actual.getPrice());
+        assertEquals(price, actual.getPrice());
         assertEquals(createdAt, actual.getCreatedAt());
         assertEquals(modifiedAt, actual.getModifiedAt());
         assertEquals(null, actual.getDeletedAt());

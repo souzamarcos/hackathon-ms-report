@@ -66,7 +66,7 @@ public class DefaultProductUseCase implements ProductUseCase {
         validateNotBlank(product.getName(), "name");
         validateNotNull(product.getDescription(), "description");
         validateNotBlank(product.getDescription(), "description");
-        validateNotNull(product.getPrice(), "value");
-        validatePositiveNotZero(product.getPrice(), "value");
+        validateNotNull(product.getPrice(), "price");
+        validatePositiveNotZero(product.getPrice(), "price");
     }
 }

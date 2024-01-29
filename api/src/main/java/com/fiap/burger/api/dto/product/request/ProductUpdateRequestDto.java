@@ -13,9 +13,9 @@ public record ProductUpdateRequestDto(
     @NotBlank String description,
     @NotBlank
     @DecimalMin("0.01")
-    Double value
+    Double price
 ) {
     public Product toEntity() {
-        return new Product(id, category, name, description, value);
+        return new Product(id, category, name, description, price);
     }
 }
