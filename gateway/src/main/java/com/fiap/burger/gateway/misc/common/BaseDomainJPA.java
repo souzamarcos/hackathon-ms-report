@@ -6,7 +6,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 
 @MappedSuperclass
-public abstract class BaseDomainJPA extends AuditableJPA {
+public abstract class BaseDomainJPA {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

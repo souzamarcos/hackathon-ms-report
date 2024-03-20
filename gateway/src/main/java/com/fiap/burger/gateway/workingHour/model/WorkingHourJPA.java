@@ -47,11 +47,11 @@ public class WorkingHourJPA extends BaseDomainJPA {
         return Objects.hash(
             getId(),
             getEmployeeId(),
-            getRegistryDateTime(),
-            getCreatedAt(),
-            getModifiedAt(),
-            getDeletedAt()
+            getRegistryDateTime()
         );
+    }
+
+    public WorkingHourJPA() {
     }
 
     public WorkingHourJPA(String employeeId, LocalDateTime registryDateTime) {
