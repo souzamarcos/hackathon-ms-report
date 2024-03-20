@@ -1,4 +1,4 @@
-rootProject.name = "ms-product"
+rootProject.name = "ms-report"
 include("application")
 include("api")
 include("controller")
