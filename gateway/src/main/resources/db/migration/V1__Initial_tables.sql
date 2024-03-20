@@ -1,13 +1,8 @@
-CREATE TABLE product(
+CREATE TABLE working_hour(
     `id` BIGINT NOT NULL AUTO_INCREMENT,
-    `category` VARCHAR(100) NOT NULL,
-    `name` VARCHAR(255) NOT NULL,
-    `description` VARCHAR(255) NOT NULL,
-    `price` DOUBLE NOT NULL,
-    `created_at` DATETIME NOT NULL,
-    `modified_at` DATETIME NOT NULL,
-    `deleted_at` DATETIME DEFAULT NULL,
+    `employee_id` VARCHAR(255) NOT NULL,
+    `registry_date_time` DATETIME NOT NULL,
     CONSTRAINT `pk_id` PRIMARY KEY (id),
-    INDEX ix_deleted_at (deleted_at),
-    INDEX ix_category (category)
+    INDEX ix_employee_id (employee_id),
+    INDEX registry_date_time (registry_date_time)
 );
