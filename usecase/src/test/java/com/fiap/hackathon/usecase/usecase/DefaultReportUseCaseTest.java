@@ -6,7 +6,9 @@ import com.fiap.hackathon.entity.report.Report;
 import com.fiap.hackathon.entity.report.ReportDate;
 import com.fiap.hackathon.entity.report.ReportDateInterval;
 import com.fiap.hackathon.entity.workingHour.WorkingHour;
+import com.fiap.hackathon.usecase.adapter.gateway.EmailGateway;
 import com.fiap.hackathon.usecase.adapter.gateway.WorkingHourGateway;
+import com.fiap.hackathon.usecase.misc.exception.WorkingHoursNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -17,14 +19,19 @@ import org.mockito.MockitoAnnotations;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 public class DefaultReportUseCaseTest {
     @Mock
-    WorkingHourGateway gateway;
+    WorkingHourGateway workingHourGateway;
+
+    @Mock
+    EmailGateway emailGateway;
 
     @InjectMocks
     DefaultReportUseCase useCase;
@@ -43,13 +50,60 @@ public class DefaultReportUseCaseTest {
             var endDate = LocalDateTime.of(2024, 3, 19, 23, 59, 59);
             var expected = expectedReport01(employee);
 
-            when(gateway.findByEmployeeIdAndBetweenStartDateAndEndDate(employee.getId(), startDate, endDate)).thenReturn(mockWorkingHours01());
+            when(workingHourGateway.findByEmployeeIdAndBetweenStartDateAndEndDate(employee.getId(), startDate, endDate)).thenReturn(mockWorkingHours01());
 
             Report actual = useCase.preview(employee, startDate, endDate);
 
             assertEquals(expected, actual);
 
-            verify(gateway, times(1)).findByEmployeeIdAndBetweenStartDateAndEndDate(employee.getId(), startDate, endDate);
+            verify(workingHourGateway, times(1)).findByEmployeeIdAndBetweenStartDateAndEndDate(employee.getId(), startDate, endDate);
+        }
+
+        @Test
+        void shouldThrownWorkingHoursNotFoundExceptionWhenPreview() {
+            var employee = new Employee("ABC001", "email@email.com", "Nome", EmployeeType.USER);
+            var startDate = LocalDateTime.of(2024, 3, 16, 0, 0, 0);
+            var endDate = LocalDateTime.of(2024, 3, 19, 23, 59, 59);
+
+            when(workingHourGateway.findByEmployeeIdAndBetweenStartDateAndEndDate(employee.getId(), startDate, endDate)).thenReturn(Collections.emptyList());
+
+            assertThrows(WorkingHoursNotFoundException.class, () -> useCase.preview(employee, startDate, endDate));
+
+            verify(workingHourGateway, times(1)).findByEmployeeIdAndBetweenStartDateAndEndDate(employee.getId(), startDate, endDate);
+        }
+    }
+
+    @Nested
+    class export {
+        @Test
+        void testPreview() {
+            var employee = new Employee("ABC001", "email@email.com", "Nome", EmployeeType.USER);
+            var startDate = LocalDateTime.of(2024, 3, 16, 0, 0, 0);
+            var endDate = LocalDateTime.of(2024, 3, 19, 23, 59, 59);
+            var expected = "Email sent sucessfully!";
+
+            when(workingHourGateway.findByEmployeeIdAndBetweenStartDateAndEndDate(employee.getId(), startDate, endDate)).thenReturn(mockWorkingHours01());
+
+            String actual = useCase.export(employee, startDate, endDate);
+
+            assertEquals(expected, actual);
+
+            verify(workingHourGateway, times(1)).findByEmployeeIdAndBetweenStartDateAndEndDate(employee.getId(), startDate, endDate);
+            verify(emailGateway, times(1)).sendEmail(expectedReport01(employee));
+        }
+
+        @Test
+        void shouldThrownWorkingHoursNotFoundExceptionWhenExport() {
+            var employee = new Employee("ABC001", "email@email.com", "Nome", EmployeeType.USER);
+            var startDate = LocalDateTime.of(2024, 3, 16, 0, 0, 0);
+            var endDate = LocalDateTime.of(2024, 3, 19, 23, 59, 59);
+
+            when(workingHourGateway.findByEmployeeIdAndBetweenStartDateAndEndDate(employee.getId(), startDate, endDate)).thenReturn(Collections.emptyList());
+
+            assertThrows(WorkingHoursNotFoundException.class, () -> useCase.export(employee, startDate, endDate));
+
+            verify(workingHourGateway, times(1)).findByEmployeeIdAndBetweenStartDateAndEndDate(employee.getId(), startDate, endDate);
+            verify(emailGateway, never()).sendEmail(expectedReport01(employee));
         }
     }
 
@@ -160,7 +214,7 @@ public class DefaultReportUseCaseTest {
                     ),
                     new ReportDateInterval(
                         LocalDateTime.of(2024, 3, 19, 18, 0, 0),
-                        LocalDateTime.of(2024, 3, 19, 18, 0, 1),
+                        null,
                         0L,
                         true
                     )

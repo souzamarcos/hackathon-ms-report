@@ -68,7 +68,7 @@ public class ReportBuilder {
         if(times.size() %2 != 0) {
             ReportDateInterval interval = new ReportDateInterval();
             interval.setEntry(times.get(times.size()-1));
-            interval.setExit(interval.getEntry().plusSeconds(1));
+            interval.setExit(null);
             interval.setTotal(buildTotal(interval.getEntry(), interval.getExit()));
             interval.setHasError(true);
             intervals.add(interval);
@@ -78,6 +78,9 @@ public class ReportBuilder {
     }
 
     private long buildTotal(LocalDateTime entry, LocalDateTime exit) {
+        if (entry == null || exit == null) {
+            return 0L;
+        }
         return entry.until(exit, ChronoUnit.MINUTES);
     }
 }

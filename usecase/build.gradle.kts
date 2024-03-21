@@ -8,4 +8,6 @@ dependencies {
     implementation("software.amazon.awssdk:sso")
     implementation("software.amazon.awssdk:ssooidc")
     implementation("software.amazon.awssdk:secretsmanager:2.21.10")
+
+    implementation("com.auth0:java-jwt:4.2.1")
 }

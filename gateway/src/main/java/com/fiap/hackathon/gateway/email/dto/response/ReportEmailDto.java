@@ -1,4 +1,4 @@
-package com.fiap.hackathon.api.dto.report.response;
+package com.fiap.hackathon.gateway.email.dto.response;
 
 
 import com.fiap.hackathon.entity.report.Report;
@@ -9,20 +9,20 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-public record ReportResponseDto (
-    ReportEmployeeResponseDto employee,
+public record ReportEmailDto(
+    ReportEmployeeEmailDto employee,
     String total,
     String warning,
-    List<ReportDateResponseDto> dates
+    List<ReportDateEmailDto> dates
 ){
-    public static ReportResponseDto toResponseDto(Report report) {
-        return new ReportResponseDto(
-            Optional.ofNullable(report.getEmployee()).map(ReportEmployeeResponseDto::toResponseDto).orElse(null),
+    public static ReportEmailDto toResponseDto(Report report) {
+        return new ReportEmailDto(
+            Optional.ofNullable(report.getEmployee()).map(ReportEmployeeEmailDto::toResponseDto).orElse(null),
             DateTimeUtils.toHourMinuteFormatByTotalMinutes(report.getTotal()),
             getWarning(report.getDates()),
             Optional.ofNullable(report.getDates()).orElse(Collections.emptyList())
                 .stream()
-                .map(ReportDateResponseDto::toResponseDto)
+                .map(ReportDateEmailDto::toResponseDto)
                 .toList()
         );
     }

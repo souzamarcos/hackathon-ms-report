@@ -4,8 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication(scanBasePackages = "com.fiap.hackathon")
-public class BurgerApplication {
+public class ReportApplication {
     public static void main(String[] args) {
-        SpringApplication.run(BurgerApplication.class, args);
+        SpringApplication.run(ReportApplication.class, args);
     }
 }
