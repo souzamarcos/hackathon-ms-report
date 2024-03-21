@@ -2,6 +2,7 @@ package com.fiap.hackathon.gateway.email.dto.response;
 
 
 import com.fiap.hackathon.entity.report.ReportDate;
+import com.fiap.hackathon.usecase.misc.utils.DateTimeUtils;
 
 import java.util.Collections;
 import java.util.List;
@@ -16,8 +17,8 @@ public record ReportDateEmailDto(
 {
     public static ReportDateEmailDto toResponseDto(ReportDate reportDate) {
         return new ReportDateEmailDto(
-            reportDate.getDate().toString(),
-            reportDate.getTotal() + "",
+            DateTimeUtils.toDateFormat(reportDate.getDate()),
+            DateTimeUtils.toHourMinuteFormatByTotalMinutes(reportDate.getTotal()),
             reportDate.getHasErrors(),
             Optional.ofNullable(reportDate.getIntervals()).orElse(Collections.emptyList())
                 .stream()

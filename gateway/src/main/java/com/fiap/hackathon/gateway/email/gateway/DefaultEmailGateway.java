@@ -20,15 +20,20 @@ public class DefaultEmailGateway implements EmailGateway {
     @Override
     public void sendEmail(Report report) {
         try {
-            SimpleMailMessage message = new SimpleMailMessage();
-            message.setFrom("noreply@hackathon.com");
-            message.setTo(report.getEmployee().getEmail());
-            message.setSubject("Relatorio - Hackathon");
-            message.setText(getMessage(report));
+            SimpleMailMessage message = buildMessage(report);
             emailSender.send(message);
         } catch (Exception e) {
             throw new SendEmailException(e);
         }
+    }
+
+    protected SimpleMailMessage buildMessage(Report report) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("noreply@hackathon.com");
+        message.setTo(report.getEmployee().getEmail());
+        message.setSubject("Relatorio - Hackathon");
+        message.setText(getMessage(report));
+        return message;
     }
 
     private String getMessage(Report report) {

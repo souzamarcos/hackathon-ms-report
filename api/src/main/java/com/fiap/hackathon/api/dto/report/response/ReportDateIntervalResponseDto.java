@@ -2,6 +2,7 @@ package com.fiap.hackathon.api.dto.report.response;
 
 
 import com.fiap.hackathon.entity.report.ReportDateInterval;
+import com.fiap.hackathon.usecase.misc.utils.DateTimeUtils;
 
 public record ReportDateIntervalResponseDto(
     String entry,
@@ -10,8 +11,8 @@ public record ReportDateIntervalResponseDto(
 {
     public static ReportDateIntervalResponseDto toResponseDto(ReportDateInterval interval) {
         return new ReportDateIntervalResponseDto(
-            interval.getEntry().toString(),
-            interval.getExit().toString()
+            DateTimeUtils.toHourMinuteFormat(interval.getEntry()),
+            DateTimeUtils.toHourMinuteFormat(interval.getExit())
         );
     }
 }
