@@ -1,6 +1,7 @@
-package com.fiap.hackathon.api.misc;
+package com.fiap.hackathon.api.misc.authentication;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.fiap.hackathon.api.misc.SecurityConfiguration;
 import com.fiap.hackathon.api.misc.token.TokenJwtUtils;
 import com.fiap.hackathon.entity.employee.Employee;
 import com.fiap.hackathon.entity.employee.EmployeeType;

@@ -1,5 +1,6 @@
 package com.fiap.hackathon.api.misc;
 
+import com.fiap.hackathon.api.misc.authentication.UserAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
