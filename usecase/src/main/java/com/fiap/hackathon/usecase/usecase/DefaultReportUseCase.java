@@ -3,6 +3,7 @@ package com.fiap.hackathon.usecase.usecase;
 import com.fiap.hackathon.entity.employee.Employee;
 import com.fiap.hackathon.entity.report.Report;
 import com.fiap.hackathon.entity.workingHour.WorkingHour;
+import com.fiap.hackathon.usecase.adapter.gateway.EmailGateway;
 import com.fiap.hackathon.usecase.adapter.gateway.WorkingHourGateway;
 import com.fiap.hackathon.usecase.adapter.usecase.ReportUseCase;
 import com.fiap.hackathon.usecase.misc.builder.ReportBuilder;
@@ -15,8 +16,11 @@ public class DefaultReportUseCase implements ReportUseCase {
 
     private final WorkingHourGateway gateway;
 
-    public DefaultReportUseCase(WorkingHourGateway gateway) {
+    private final EmailGateway emailGateway;
+
+    public DefaultReportUseCase(WorkingHourGateway gateway, EmailGateway emailGateway) {
         this.gateway = gateway;
+        this.emailGateway = emailGateway;
     }
 
     @Override
@@ -42,6 +46,10 @@ public class DefaultReportUseCase implements ReportUseCase {
             throw new WorkingHoursNotFoundException(employee.getId());
         }
 
-        return null;
+        var report = new ReportBuilder(employee, workingHours).build();
+
+        emailGateway.sendEmail(report);
+
+        return "Email sent sucessfully!";
     }
 }

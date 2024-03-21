@@ -9,6 +9,7 @@ dependencies {
 
 
     implementation(rootProject.libs.aws.dynamodb.enhanced)
+    implementation("org.springframework.boot:spring-boot-starter-mail:2.5.6")
 
     runtimeOnly(rootProject.libs.mysql.connector)
 }

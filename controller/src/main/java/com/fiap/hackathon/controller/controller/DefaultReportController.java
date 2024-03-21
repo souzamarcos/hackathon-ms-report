@@ -23,7 +23,7 @@ public class DefaultReportController implements ReportController {
 
     @Override
     public String export(String employeeId, LocalDateTime startDate, LocalDateTime endDate) {
-        var employee = new Employee(employeeId, "email@email.com", "Nome", EmployeeType.USER);
+        var employee = new Employee(employeeId, "ghvoliveira@gmail.com", "GH", EmployeeType.USER);
         return useCase.export(employee, startDate, endDate);
     }
 }
