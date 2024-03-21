@@ -2,17 +2,18 @@ package com.fiap.hackathon.usecase.misc.utils;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 public class DateTimeUtils {
 
     public static String toDateFormat(LocalDateTime localDateTime) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        return localDateTime.format(formatter);
+        return Optional.ofNullable(localDateTime).map(l -> l.format(formatter)).orElse("");
     }
 
     public static String toHourMinuteFormat(LocalDateTime localDateTime) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-        return localDateTime.format(formatter);
+        return Optional.ofNullable(localDateTime).map(l -> l.format(formatter)).orElse("");
     }
 
     public static String toHourMinuteFormatByTotalMinutes(Long minutes) {

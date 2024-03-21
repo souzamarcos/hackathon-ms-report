@@ -1,6 +1,5 @@
 package com.fiap.hackathon.api.dto.report.response;
 
-
 import com.fiap.hackathon.entity.report.ReportDate;
 import com.fiap.hackathon.usecase.misc.utils.DateTimeUtils;
 
@@ -11,7 +10,7 @@ import java.util.Optional;
 public record ReportDateResponseDto(
     String date,
     String total,
-    Boolean hasErrors,
+    String warning,
     List<ReportDateIntervalResponseDto> intervals
 )
 {
@@ -19,11 +18,18 @@ public record ReportDateResponseDto(
         return new ReportDateResponseDto(
             DateTimeUtils.toDateFormat(reportDate.getDate()),
             DateTimeUtils.toHourMinuteFormatByTotalMinutes(reportDate.getTotal()),
-            reportDate.getHasErrors(),
+            getWarning(reportDate),
             Optional.ofNullable(reportDate.getIntervals()).orElse(Collections.emptyList())
                 .stream()
                 .map(ReportDateIntervalResponseDto::toResponseDto)
                 .toList()
         );
+    }
+
+    private static String getWarning(ReportDate reportDate) {
+        if (Optional.ofNullable(reportDate.getHasErrors()).orElse(false)) {
+            return "REGISTRO DE PONTO INCONSISTENTE";
+        }
+        return null;
     }
 }

@@ -31,7 +31,7 @@ public class ReportApi {
     @Autowired
     ReportController controller;
 
-    @Operation(summary = "Visualizar relatorio", description = "Visualizar relatorio de ponto de horas", tags = {"relatorio"})
+    @Operation(summary = "Visualizar relatório", description = "Visualizar relatório de ponto de horas", tags = {"relatorio"})
     @ApiResponses(value = {@ApiResponse(responseCode = "400", description = "Request inválida")})
     @GetMapping("/preview")
     @SecurityRequirement(name = "Bearer Authentication")
@@ -42,7 +42,7 @@ public class ReportApi {
             .preview(employee, startDate, endDate));
     }
 
-    @Operation(summary = "Exportar relatorio para email", description = "Exportar relatório de ponto de horas", tags = {"relatorio"})
+    @Operation(summary = "Exportar relatório para email", description = "Exportar relatório de ponto de horas", tags = {"relatorio"})
     @ApiResponses(value = {@ApiResponse(responseCode = "400", description = "Request inválida")})
     @PostMapping("/export")
     @SecurityRequirement(name = "Bearer Authentication")

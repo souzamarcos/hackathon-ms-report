@@ -12,14 +12,14 @@ import java.util.Optional;
 public record ReportEmailDto(
     ReportEmployeeEmailDto employee,
     String total,
-    Boolean hasError,
+    String warning,
     List<ReportDateEmailDto> dates
 ){
     public static ReportEmailDto toResponseDto(Report report) {
         return new ReportEmailDto(
             Optional.ofNullable(report.getEmployee()).map(ReportEmployeeEmailDto::toResponseDto).orElse(null),
             DateTimeUtils.toHourMinuteFormatByTotalMinutes(report.getTotal()),
-            hasErrors(report.getDates()),
+            getWarning(report.getDates()),
             Optional.ofNullable(report.getDates()).orElse(Collections.emptyList())
                 .stream()
                 .map(ReportDateEmailDto::toResponseDto)
@@ -27,7 +27,14 @@ public record ReportEmailDto(
         );
     }
 
-    private static Boolean hasErrors(List<ReportDate> dates) {
+    private static String getWarning(List<ReportDate> dates) {
+        if (hasErrors(dates)) {
+            return "RELATORIO POSSUI UM OU MAIS DIAS COM REGISTRO DE PONTO INCONSISTENTE";
+        }
+        return null;
+    }
+
+    private static boolean hasErrors(List<ReportDate> dates) {
         return Optional.ofNullable(dates).orElse(Collections.emptyList())
             .stream().anyMatch(ReportDate::getHasErrors);
     }

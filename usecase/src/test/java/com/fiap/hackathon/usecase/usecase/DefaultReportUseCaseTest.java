@@ -186,7 +186,7 @@ public class DefaultReportUseCaseTest {
                     ),
                     new ReportDateInterval(
                         LocalDateTime.of(2024, 3, 19, 18, 0, 0),
-                        LocalDateTime.of(2024, 3, 19, 18, 0, 1),
+                        null,
                         0L,
                         true
                     )

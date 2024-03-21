@@ -1,5 +1,6 @@
 package com.fiap.hackathon.gateway.misc;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,14 +17,20 @@ import java.util.Properties;
 @Configuration
 public class GatewayConfiguration {
 
+    @Value("${mail.sender.username}")
+    private String mailSenderUsername;
+
+    @Value("${mail.sender.password}")
+    private String mailSenderPassword;
+
     @Bean
     public JavaMailSender getJavaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost("smtp.gmail.com");
         mailSender.setPort(587);
 
-        mailSender.setUsername("hackatonsoatgrupo@gmail.com");
-        mailSender.setPassword("twtzziymxktsvuas");
+        mailSender.setUsername(mailSenderUsername);
+        mailSender.setPassword(mailSenderPassword);
 
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");

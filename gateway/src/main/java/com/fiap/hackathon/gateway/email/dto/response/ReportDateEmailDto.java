@@ -11,7 +11,7 @@ import java.util.Optional;
 public record ReportDateEmailDto(
     String date,
     String total,
-    Boolean hasErrors,
+    String warning,
     List<ReportDateIntervalEmailDto> intervals
 )
 {
@@ -19,11 +19,18 @@ public record ReportDateEmailDto(
         return new ReportDateEmailDto(
             DateTimeUtils.toDateFormat(reportDate.getDate()),
             DateTimeUtils.toHourMinuteFormatByTotalMinutes(reportDate.getTotal()),
-            reportDate.getHasErrors(),
+            getWarning(reportDate),
             Optional.ofNullable(reportDate.getIntervals()).orElse(Collections.emptyList())
                 .stream()
                 .map(ReportDateIntervalEmailDto::toResponseDto)
                 .toList()
         );
+    }
+
+    private static String getWarning(ReportDate reportDate) {
+        if (Optional.ofNullable(reportDate.getHasErrors()).orElse(false)) {
+            return "REGISTRO DE PONTO INCONSISTENTE";
+        }
+        return null;
     }
 }
