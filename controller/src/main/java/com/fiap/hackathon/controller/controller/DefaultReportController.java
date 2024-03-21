@@ -16,14 +16,12 @@ public class DefaultReportController implements ReportController {
     ReportUseCase useCase;
 
     @Override
-    public Report preview(String employeeId, LocalDateTime startDate, LocalDateTime endDate) {
-        var employee = new Employee(employeeId, "email@email.com", "Nome", EmployeeType.USER);
+    public Report preview(Employee employee, LocalDateTime startDate, LocalDateTime endDate) {
         return useCase.preview(employee, startDate, endDate);
     }
 
     @Override
-    public String export(String employeeId, LocalDateTime startDate, LocalDateTime endDate) {
-        var employee = new Employee(employeeId, "ghvoliveira@gmail.com", "GH", EmployeeType.USER);
+    public String export(Employee employee, LocalDateTime startDate, LocalDateTime endDate) {
         return useCase.export(employee, startDate, endDate);
     }
 }

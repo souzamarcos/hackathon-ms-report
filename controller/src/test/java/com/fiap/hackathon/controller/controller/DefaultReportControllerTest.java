@@ -41,7 +41,7 @@ class DefaultReportControllerTest {
 
             when(useCase.preview(employee, startDate, endDate)).thenReturn(expected);
 
-            Report actual = controller.preview(employee.getId(), startDate, endDate);
+            Report actual = controller.preview(employee, startDate, endDate);
 
             assertEquals(expected, actual);
 
@@ -60,7 +60,7 @@ class DefaultReportControllerTest {
 
             when(useCase.export(employee, startDate, endDate)).thenReturn(expected);
 
-            String actual = controller.export(employee.getId(), startDate, endDate);
+            String actual = controller.export(employee, startDate, endDate);
 
             assertEquals(expected, actual);
 

@@ -9,7 +9,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.time.LocalDateTime;
 
@@ -28,38 +32,50 @@ class ReportApiTest {
 
     @Test
     void shouldPreview() {
-        var employeeId = "ABC001";
+        var employee = new Employee("ABC001", "email@email.com", "Nome", EmployeeType.USER);
         var startDate = LocalDateTime.now();
         var endDate = LocalDateTime.now();
         var report = new Report(
-            new Employee(employeeId, "email@email.com", "Nome", EmployeeType.USER),
+            employee,
             0L,
             null);
         var expected = ReportResponseDto.toResponseDto(report);
 
-        when(controller.preview(employeeId, startDate, endDate)).thenReturn(report);
+        when(controller.preview(employee, startDate, endDate)).thenReturn(report);
 
-        ReportResponseDto actual = api.preview(employeeId, startDate, endDate);
+        Authentication authentication = Mockito.mock(Authentication.class);
+        when(authentication.getCredentials()).thenReturn(employee);
+        SecurityContext securityContext = Mockito.mock(SecurityContext.class);
+        Mockito.when(securityContext.getAuthentication()).thenReturn(authentication);
+        SecurityContextHolder.setContext(securityContext);
+
+        ReportResponseDto actual = api.preview(startDate, endDate);
 
         assertEquals(expected, actual);
 
-        verify(controller, times(1)).preview(employeeId, startDate, endDate);
+        verify(controller, times(1)).preview(employee, startDate, endDate);
     }
 
     @Test
     void shouldExport() {
-        var employeeId = "ABC001";
+        var employee = new Employee("ABC001", "email@email.com", "Nome", EmployeeType.USER);
         var startDate = LocalDateTime.now();
         var endDate = LocalDateTime.now();
         var expected = "Report sent sucessfully.";
 
-        when(controller.export(employeeId, startDate, endDate)).thenReturn(expected);
+        when(controller.export(employee, startDate, endDate)).thenReturn(expected);
 
-        String actual = api.export(employeeId, startDate, endDate);
+        Authentication authentication = Mockito.mock(Authentication.class);
+        when(authentication.getCredentials()).thenReturn(employee);
+        SecurityContext securityContext = Mockito.mock(SecurityContext.class);
+        Mockito.when(securityContext.getAuthentication()).thenReturn(authentication);
+        SecurityContextHolder.setContext(securityContext);
+
+        String actual = api.export(startDate, endDate);
 
         assertEquals(expected, actual);
 
-        verify(controller, times(1)).export(employeeId, startDate, endDate);
+        verify(controller, times(1)).export(employee, startDate, endDate);
     }
 
 }
