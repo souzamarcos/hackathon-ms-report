@@ -9,6 +9,10 @@ import java.util.Optional;
 public class DateTimeUtils {
 
     public static String toDateFormat(LocalDateTime localDateTime) {
+        if(localDateTime == null) {
+            return "";
+        }
+
         var instant = localDateTime.toInstant(ZoneOffset.UTC);
         var localDateUTC = LocalDateTime.ofInstant(instant, ZoneId.of("America/Sao_Paulo"));
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -16,6 +20,10 @@ public class DateTimeUtils {
     }
 
     public static String toHourMinuteFormat(LocalDateTime localDateTime) {
+        if(localDateTime == null) {
+            return "";
+        }
+
         var instant = localDateTime.toInstant(ZoneOffset.UTC);
         var localDateUTC = LocalDateTime.ofInstant(instant, ZoneId.of("America/Sao_Paulo"));
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");

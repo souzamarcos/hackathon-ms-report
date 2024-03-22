@@ -20,9 +20,29 @@ class DateTimeUtilsTest {
     }
 
     @Test
+    void toDateFormatNull() {
+        LocalDateTime localDateTime = null;
+        var expected = "";
+
+        var actual = DateTimeUtils.toDateFormat(localDateTime);
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
     void toHourMinuteFormatByLocalDateTime() {
         var localDateTime = LocalDateTime.of(2024, 3, 20, 22, 14, 59, 6);
         var expected = "19:14";
+
+        var actual = DateTimeUtils.toHourMinuteFormat(localDateTime);
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void toHourMinuteFormatByLocalDateTimeNull() {
+        LocalDateTime localDateTime = null;
+        var expected = "";
 
         var actual = DateTimeUtils.toHourMinuteFormat(localDateTime);
 
