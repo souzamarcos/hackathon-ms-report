@@ -11,7 +11,7 @@ class DateTimeUtilsTest {
 
     @Test
     void toDateFormat() {
-        var localDateTime = LocalDateTime.of(2024, 3, 20, 22, 14, 59, 6);
+        var localDateTime = LocalDateTime.of(2024, 3, 20, 10, 14, 59, 6);
         var expected = "20/03/2024";
 
         var actual = DateTimeUtils.toDateFormat(localDateTime);
@@ -22,7 +22,7 @@ class DateTimeUtilsTest {
     @Test
     void toHourMinuteFormatByLocalDateTime() {
         var localDateTime = LocalDateTime.of(2024, 3, 20, 22, 14, 59, 6);
-        var expected = "22:14";
+        var expected = "19:14";
 
         var actual = DateTimeUtils.toHourMinuteFormat(localDateTime);
 
